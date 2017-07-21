@@ -1,0 +1,27 @@
+@import '../../theme/sass/auth';
+.partner-row
+{
+    width:100%;
+    float: left;
+
+}
+.partner-column
+{
+    width: 30%;
+    margin: 30px 1.6%;
+    float: left;
+    min-height: 50px;
+    text-align: center;
+}
+.partner-column p
+{
+    width: 80%;
+    margin-left: 10%;
+    text-align: center;
+    margin-top: 20px;
+}
+.partner-column a
+{
+    color:#111;
+    text-decoration: none;
+}

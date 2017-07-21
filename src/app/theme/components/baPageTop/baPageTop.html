@@ -1,0 +1,43 @@
+<div class="page-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)"
+     [ngClass]="{scrolled: isScrolled}">
+  <a routerLink="/pages/dashboard" class="al-logo clearfix">MAD</a>
+  <a href (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
+
+
+
+
+
+  <div class="user-profile clearfix">
+    <div class="dropdown al-user-profile">
+      <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown" aria-expanded="false">
+          
+      <i class="prifleInitials" *ngIf="!prifleImage">{{initialOfName}}</i>
+        <img *ngIf="prifleImage" src="{{ prifleImage }}">
+      </a>
+      <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
+        <li class="dropdown-item"><i class="dropdown-arr"></i></li>
+        <li class="dropdown-item"><a href="#/pages/profile"><i class="fa fa-user"></i>Perfil</a></li>
+        <!--<li class="dropdown-item"><a href><i class="fa fa-cog"></i>Settings</a></li> -->
+        <li class="dropdown-item"><a href class="signout" (click)="logout()"><i class="fa fa-power-off"></i>Sair</a></li>
+      </ul>
+    </div>
+    <!-- <ba-msg-center></ba-msg-center> -->
+ 
+    <div  class="dropdown al-user-profile" style="width: 100px;">
+      <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown" aria-expanded="false">
+        <div style="float: left;">
+        <span class="badge w3-badge" style="border-radius: 50%;   padding: 2px 6px;" *ngIf="NotificationCounter>0">{{NotificationCounter}}</span>
+        <i class="icon ion-android-notifications" style="font-size: 40px;"></i>
+        </div>
+      </a>
+      <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
+       
+       <li class="dropdown-item-1" (click)="opneNotifications(notification)" *ngFor="let notification of notifications">{{notification.text}}</li>
+     
+        
+      </ul>
+    </div>
+    <!-- <ba-msg-center></ba-msg-center> -->
+  </div>
+
+</div>

@@ -1,0 +1,58 @@
+@import '../../theme/sass/auth';
+.table-heading
+{
+	box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.projectdetails
+{
+    margin-top: 20px;
+}
+.project-row
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.tasks-heading
+{
+	box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 0.1);
+    height:40px;
+    line-height:40px;
+    padding-left:10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.project_feeds
+{
+	    width: 100%;
+    border-bottom: 1px dotted;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+.feed-attachment.ion-android-attach{
+   font-size: 25px;
+    margin-right: 5px; 
+}
+.feed-attachment
+{
+    
+    color:yellow;
+}
+.project-bg-image-outer
+{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left:0;
+    right:0;
+    background:rgba(0,0,0,0.5);
+}
+.project-bg-image
+{
+   max-width:100%;
+    width: 100%;
+}

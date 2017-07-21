@@ -1,0 +1,14 @@
+<ba-card class="pie-chart-item-container col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12" *ngFor="let partnerUser of partnerUsers;">
+              
+              <p  *ngIf="partnerUser.name">Name : {{partnerUser.name}}</p>
+              <p  *ngIf="partnerUser.email">Email : {{partnerUser.email}}</p>
+              <p  *ngIf="partnerUser.companyName">Partner Of : {{partnerUser.companyName}}</p>
+              <h5  *ngIf="partnerUser.amount">You can donate upto {{partnerUser.amount}} coins to this partner</h5>
+               <input  [(ngModel)]="amount[partnerUser.uid]" id="input-donate-{{partnerUser.uid}}" name="amount" type="text" class="form-control"  placeholder="Enter coins here" maxlength="{{partnerUser.amount}}">
+              <button  class="btn btn-success btn-auth" id="btn-donate-{{partnerUser.uid}}" (click)="donate(amount[partnerUser.uid],partnerUser.uid,partnerUser.amount,partnerUser.superUserId)">Donate</button>
+             
+             
+            </ba-card>
+
+
+

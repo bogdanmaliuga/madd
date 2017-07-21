@@ -1,0 +1,204 @@
+<div *ngIf="project" >
+  <div class="row" *ngIf="!deleteConfirm && project.createdBy==email">
+   
+   <button class="btn btn-danger" style="margin-bottom: 10px;float: right;" (click)=deleteProject()>Delete Project</button>
+  <button class="btn btn-info" style="margin-bottom: 10px;float: right; position: relative;margin-right:10px;" (click)=setBackground()><input (change)="setBackground($event)" accept="image/*" type="file" style="position:absolute;opacity: 0;left:0;width:130px;"> Set Banner Image</button>
+  </div>
+  <div class="row" *ngIf="deleteConfirm">
+  
+    <div style="float: right;width: 220px;text-align: center;padding-top: 10px;padding-bottom: 10px;" class="col-xlg-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 table-heading"><div>Are you sure?</div>
+      <button class="btn btn-danger" style="margin-top: 10px;margin-bottom: 10px;float: left;" (click)=deleteProjectConfirm()>Yes</button>
+      <button class="btn btn-success" style="margin-top: 10px;margin-bottom: 10px;float: right;" (click)=deleteProjectCancel()>Cancel</button>
+    </div>
+  </div>
+<img  *ngIf="project.background" [src]="project.background" class="project-bg-image" />
+</div>
+<div *ngIf="project" class="col-xs-7 projectdetails">
+<button class="btn btn-danger" style="margin-bottom: 10px;" *ngIf="!edit" (click)=editProject()>Edit</button>
+<button class="btn btn-success" style="margin-bottom: 10px;" *ngIf="edit" (click)=saveProject()>Save</button>
+	<div class="row project-row">
+		<div class="col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12"><b>Title</b></div>
+		<div class="col-xlg-9 col-lg-9 col-md-9 col-sm-12 col-xs-12" *ngIf="!edit" >: {{project.projectname}}</div>
+    <div class="col-xlg-8 col-lg-8 col-md-8 col-sm-12 col-xs-12" *ngIf="edit" >
+        <input  [(ngModel)]="project.projectname" name="projectname" type="text" class="form-control" id="inputEmail3" placeholder="Project name">
+    </div>
+	</div>
+	<div class="row project-row">
+		<div class="col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12"><b>Project Objective</b></div>
+		<div class="col-xlg-9 col-lg-9 col-md-9 col-sm-12 col-xs-12" *ngIf="!edit" >: {{project.projectobjective}}</div>
+    <div class="col-xlg-9 col-lg-9 col-md-9 col-sm-12 col-xs-12" *ngIf="edit" >
+          <textarea  [(ngModel)]="project.projectobjective" name="projectobjective" class="form-control" id="textarea01" placeholder="Project Objective"></textarea>
+        </div>
+	</div>
+	<div class="row project-row">
+		<div class="col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12"><b>Type</b></div>
+		<div class="col-xlg-9 col-lg-9 col-md-9 col-sm-12 col-xs-12" *ngIf="!edit">: {{project.type}}</div>
+    <div class="col-xlg-9 col-lg-9 col-md-9 col-sm-12 col-xs-12" *ngIf="edit">
+        <div class="input-demo radio-demo row">
+            <div class="col-md-4">
+              <label class="radio-inline custom-radio nowrap">
+                <input type="radio" name="type" id="inlineRadio1" value="public"  [(ngModel)]="project.type">
+                <span>Public</span>
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label class="radio-inline custom-radio nowrap" >
+                <input type="radio" name="type1" id="inlineRadio2" value="private"  [(ngModel)]="project.type" >
+                <span>Private</span>
+              </label>
+            </div>
+        </div>
+    </div>
+
+	</div>
+	<div class="row project-row" *ngIf="!edit">
+		<div class="col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12"><b>Created By</b></div>
+		<div class="col-xlg-9 col-lg-9 col-md-9 col-sm-12 col-xs-12">: {{project.createdBy}}</div>
+	</div>
+  <div class="widgets" *ngIf="showSmartTable && edit">
+
+        <div class="row">
+          <ba-card title="Project Resources" baCardClass="with-scroll">
+            <ng2-smart-table [settings]="resource_settings" [source]="resources_temp" (editConfirm)="saveResource($event,'edit')" (createConfirm)="saveResource($event,'save')" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+          </ba-card>
+        </div>
+
+      </div>    
+     <!--<div class="widgets" *ngIf="showSmartTable && edit">
+
+        <div class="row">
+          <ba-card title="Project Tasks" baCardClass="with-scroll">
+            <ng2-smart-table [settings]="tasks_settings" [source]="tasks_temp" (editConfirm)="saveTask($event,'edit')" (createConfirm)="saveTask($event,'save')" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+          </ba-card>
+        </div>
+
+      </div>-->
+
+	<div class="row" *ngIf="project['resources'] && !edit">
+
+		 <div class="table-responsive" *ngIf="project['resources'].length>0">
+                <table class="table table-condensed">
+                  <tr class="table-heading">
+                    <th>#</th>
+                    <th>Resource Name</th>
+                    <th>Resource Cost</th>
+                    <th>Status</th>
+                    <th>Assign To</th>
+                  </tr>
+                  <tr *ngFor="let resource of project['resources'];let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{resource.resourceName}}</td>
+                    <td>{{resource.resourceCost}}</td>
+                    <td>{{resource.status}}</td>
+                    <td *ngIf="resource.resourceAssinedTo!=0">{{resource.resourceAssinedTo}}</td>
+                  </tr>
+                </table>
+              </div>
+	</div>
+	<div class="row" *ngIf="project['tasks'] && !edit">
+
+		<div class="table-responsive" *ngIf="project['tasks'].length>0">
+                <table class="table table-condensed">
+                  <tr class="table-heading">
+                    <th>#</th>
+                    <th>Task Name</th>
+                    <th>Task Description</th>
+                    <th>Task Reward</th>
+                    <th>Status</th>
+                    <th>Task Assign To</th>
+                    
+                  </tr>
+                  <tr *ngFor="let task of project['tasks']; let i=index" >
+                    <td>{{i+1}}</td>
+                    <td>{{task.taskName}}</td>
+                    <td>{{task.taskDesc}}</td>
+                    <td>{{task.taskReward}}</td>
+                    
+                    <td *ngIf='task.status=="pending" || task.status=="accepted"'>{{task.status}}</td>
+                    <td *ngIf='task.status!="pending" && task.status!="accepted"'>{{task.progress}}%</td>
+                    
+                    <td *ngIf="task.taskAssignedTo!=0">{{task.taskAssignedTo}}</td>
+                    <td *ngIf="task.taskAssignedTo==0 && project.createdBy!=email && !task.requested"><button type="button"  class="btn btn-info btn-xs" (click)="RequestResponsibility('1',task,i)">Request Responsibility</button></td>
+                     <td *ngIf="task.taskAssignedTo==0 && project.createdBy!=email && task.requested">Requested</td>
+                    <td *ngIf="task.taskAssignedTo==0 && project.createdBy==email"><button type="button"  class="btn btn-info btn-xs" (click)="RequestResponsibility('2',task,i)">Assign To Me</button></td>
+                  </tr>
+                </table>
+              </div>
+	</div>
+  <div class="tasks-heading row" *ngIf="project.createdBy==email && requestRecievedForTasks.length>0">Request recieved for task responsibility</div>
+  <div class="row" *ngIf="project.createdBy==email">
+    <div *ngFor="let task of requestRecievedForTasks; let index=index" >
+
+      <ba-card  class="pie-chart-item-container col-xlg-4 col-lg-4 col-md-6 col-sm-12 col-xs-12" *ngIf="task.taskName">
+            
+              <p>Task Name : {{task.taskName}}</p>
+              <p>Task Description : {{task.taskDesc}}</p>
+              <p>Task Reward : {{task.taskReward}}</p>
+              <p>Task Status : {{task.status}}</p>
+              <p>User : {{task.email}}</p>
+             <button   class="btn btn-danger btn-auth" (click)="rejectRequest(task,index)">Reject</button>
+             <button   class="btn btn-success btn-auth" (click)="acceptRequest(task,index)">Yes, Assign</button>
+            </ba-card>
+    </div>
+  </div>
+	<div class="tasks-heading row">My Tasks</div>
+    <div *ngFor="let task of project['tasks']; let index=index">
+
+      <ba-card *ngIf='task.taskAssignedTo==email' class="pie-chart-item-container col-xlg-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+              <div style="width:100%;float:left;" *ngIf="task.progress"> <p style="float: left;">Task Progress : </p>
+                <p style="float: left;" *ngIf="task.edit!=true">  {{task.progress}}% </p>
+                <select style="float: left;"  [(ngModel)]="task.progress" *ngIf="task.edit==true">
+                  <option value="0">0%</option>
+                  <option value="10">10%</option>
+                  <option value="20">20%</option>
+                  <option value="30">30%</option>
+                  <option value="40">40%</option>
+                  <option value="50">50%</option>
+                  <option value="60">60%</option>
+                  <option value="70">70%</option>
+                  <option value="80">80%</option>
+                  <option value="90">90%</option>
+                 
+                </select>
+              <button type="button" *ngIf="task.edit!=true && task.status!='completed'" class="btn btn-info btn-xs" (click)="task.edit=true ">Edit</button>
+               <button type="button" *ngIf="task.edit==true" class="btn btn-success btn-xs" (click)="task.edit=false;saveTaskProgress(task,index);">Save</button>
+
+              </div>
+              <p>Task Name : {{task.taskName}}</p>
+              <p>Task Description : {{task.taskDesc}}</p>
+              <p>Task Reward : {{task.taskReward}}</p>
+              <p>Task Status : {{task.status}}</p>
+             
+
+          
+                <button  *ngIf="task.status=='accepted'" class="btn btn-default btn-auth" (click)="movetoprogress(task,index)">Move in progress</button>
+                 <button  *ngIf="task.status=='inprogress'" class="btn btn-success btn-auth" (click)="taskcompleted(task,index)">Completed</button>
+            </ba-card>
+            </div>
+</div>
+<div  class="col-xs-1"></div>
+  <div class="col-xs-4 projectdetails"  *ngIf="project && notifications" >
+  <h3>News Feeds</h3>
+  <button class="btn btn-default" style="margin-bottom: 10px;float: right;" (click)=showPrompt()>Add Feed</button>
+<div style="height: 500px;overflow: scroll;width: 100%;">
+<div class="project_feeds col-xlg-12 col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngFor="let notification of notifications">
+      <div *ngIf="notification.type!='user'">{{notification.text}}</div>
+      <div *ngIf="notification.type=='user'"><b>{{notification.email}}</b> : {{notification.text}}
+      <div *ngIf="notification.contain=='textAndFile' || notification.contain=='onlyFile'">
+        <img [src]="notification.url" style="max-width: 100%;" *ngIf="notification.fileType.indexOf('image')==0" >
+        <video width="100%"  controls *ngIf="notification.fileType.indexOf('video')==0" [src]="notification.url">
+         
+          
+        Your browser does not support the video tag.
+        </video>
+       
+        <object [data]="sanitizerURL(notification.url)" type="application/pdf"  width="100%" *ngIf="notification.fileType.indexOf('application/pdf')==0" >
+              alt : <a [href]="sanitizerURL(notification.url)"></a>
+          </object>
+        <i class="feed-attachment ion-android-attach"></i>
+        <i class="feed-attachment">{{notification.fileType}}</i> 
+      <a class="feed-attachment" class="btn btn-info btn-xs" href="{{notification.url}}" target="_blank">View</a></div>
+      </div>
+    </div>
+    </div>
+</div>

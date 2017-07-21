@@ -1,0 +1,64 @@
+@media screen and (min-width: 1620px) {
+  .row.shift-up {
+    > * {
+      margin-top: -573px;
+    }
+  }
+}
+
+@media screen and (max-width: 1620px) {
+  .card.feed-panel.large-card {
+    height: 824px;
+  }
+}
+
+.user-stats-card {
+  .card-title {
+    padding: 0 0 15px;
+  }
+}
+
+.blurCalendar {
+  height: 475px;
+}
+
+.dashboard-notification
+{
+  
+}
+.timeline
+{
+  background: rgba(255,255,2555,0.2);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.partner-row
+{
+    width:100%;
+
+}
+.partner-column
+{
+    width: 45%;
+    margin: 30px 1.6%;
+    float: left;
+    min-height: 50px;
+    text-align: center;
+        height: 350px;
+   overflow-y: scroll;
+    overflow-x: hidden;
+}
+.partner-column p
+{
+    width: 80%;
+    margin-left: 10%;
+    text-align: center;
+    margin-top: 20px;
+     color:#111;
+}
+.partner-column a
+{
+    color:#111;
+    text-decoration: none;
+}

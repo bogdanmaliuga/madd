@@ -1,0 +1,87 @@
+ <div class="container" *ngIf="showChatWindow">
+    <div class="row chat-window col-xs-5 col-md-3" id="chat_window_1" style="margin-left:10px;">
+        <div class="col-xs-12 col-md-12">
+          <div class="panel panel-default">
+                <div class="panel-heading top-bar">
+                    <div class="col-md-8 col-xs-8">
+                        <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span>{{partnerName}}</h3>
+                    </div>
+                    <div class="col-md-4 col-xs-4" style="text-align: right;">
+                        <span (click)="closeWindow()" id="minim_chat_window" class="ion-close"></span>
+                       
+                    </div>
+                </div>
+                <div class="panel-body msg_container_base" id="msg_container_base">
+                    <div *ngFor="let message of messages | async">    
+                    <div *ngIf="message.sender!=uid" class="row msg_container base_receive" >
+                        <div class="col-md-2 col-xs-2 avatar">
+                            <img *ngIf="!partnerImage" src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                            <img *ngIf="partnerImage" src="{{partnerImage}}" class=" img-responsive ">
+
+                            
+                        </div>
+                        <div class="col-xs-10 col-md-10">
+                            <div class="messages msg_receive">
+                                <p *ngIf="!message.fileurl">{{message.text}} </p>
+                                
+                                <p *ngIf="message.fileurl"><time>File shared</time><a class="feed-attachment" class="btn btn-info btn-xs" href="{{message.fileurl}}" target="_blank">View</a> </p>
+                                <time datetime="2009-11-13T20:00">{{message.timestamp | date:'dd/MM/yy hh:MM a'}}</time>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="message.sender==uid" class="row msg_container base_sent">
+                        <div class="col-md-10 col-xs-10 ">
+                            <div class="messages msg_sent">
+                                <p *ngIf="!message.fileurl">{{message.text}} </p>
+
+                                <p *ngIf="message.fileurl">
+                                <time>File shared</time>
+                                <a class="feed-attachment" class="btn btn-info btn-xs" href="{{message.fileurl}}" target="_blank">View</a> </p>
+                                
+
+                                <time datetime="2009-11-13T20:00">{{message.timestamp | date:'dd/MM/yy hh:MM a'}}</time>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-xs-2 avatar">
+                            <img *ngIf="!prifleImage" src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                            <img *ngIf="prifleImage" src="{{prifleImage}}" class=" img-responsive ">
+                        </div>
+                    </div>
+                 </div>
+                </div>
+                <div class="panel-footer">
+                <div  class="form-control input-sm chat_input" *ngIf="file"  style=" background: #fff; border: 0px; border-radius: 0px; color: #111;">
+                    {{file.name}}<i class="ion-backspace" (click)="removeFile();"></i>
+                </div>
+                    <div class="input-group">
+                        <div class="input-group-btn" style="position: relative;">
+                         <input type="file" (change)="onChange($event)" style="position: absolute;z-index: 1;width: 100%;height: 100%;opacity: 0;" />   
+                        <button class="btn-primary" id="btn-chat" ><i class="icon ion-paperclip" style="    font-size: 25px;"></i> </button>
+                      
+                        </div>
+                        
+                        <input *ngIf="file"  type="text" class="form-control input-sm chat_input" style="opacity: 0;" />        
+                        <input *ngIf="!file" id="btn-input" [(ngModel)]="message" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+                        <span class="input-group-btn">
+                        <button class="btn btn-primary btn-sm" id="btn-chat" (click)="send(message);">Send</button>
+                        </span>
+                    </div>
+                </div>
+        </div>
+        </div>
+    </div>
+    
+    <div class="btn-group dropup">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-cog"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#" id="new_chat"><span class="glyphicon glyphicon-plus"></span> Novo</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-list"></span> Ver outras</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-remove"></span> Fechar Tudo</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Invisivel</a></li>
+        </ul>
+    </div>
+</div>

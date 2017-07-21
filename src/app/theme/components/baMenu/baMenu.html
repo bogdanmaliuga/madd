@@ -1,0 +1,30 @@
+<aside class="al-sidebar" (mouseleave)="hoverElemTop=outOfArea" sidebarResize>
+  <ul id="al-sidebar-list" class="al-sidebar-list" baSlimScroll [baSlimScrollOptions]="{height: menuHeight}">
+    <ba-menu-item
+      [menuItem]="item"
+      (itemHover)="hoverItem($event)"
+      (toggleSubMenu)="toggleSubMenu($event)"
+      *ngFor="let item of menuItems"></ba-menu-item>
+     
+      <a *ngIf="sUserDash" href="#/pages/superuserpage" class="al-sidebar-list-link">
+        <span>Empresas MAD</span>
+      </a>
+      <a *ngIf="AdmPageLink"  href="#/pages/adminpage" class="al-sidebar-list-link">
+        <span>Admin</span>
+      </a>
+      <a  *ngIf="CoinsPageLink" href="#/pages/donatecoins" class="al-sidebar-list-link">
+        <span>Doe e Faça a Diferença</span>
+      </a>  
+      <div class="connections-title">Minha Rede MAD</div>
+      <div class="connections-item" (click)="openChat(item);" *ngFor="let item of connections">
+       <img *ngIf="!connectionsImage[item.id]" src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive connection-image">
+       <img *ngIf="connectionsImage[item.id]" src="{{connectionsImage[item.id]}}" class=" img-responsive connection-image">
+
+      <i *ngIf="connectionsOnline[item.id]" class="green-online"></i>
+      <i class="gray-offline" *ngIf="!connectionsOnline[item.id]"></i>
+      <div style="float:left;width: 130px;"> {{item.contact}}</div> <i *ngIf="item.status=='pending'" style="font-size: 10px;color: red;">({{item.status}})</i><span class="w3-badge" *ngIf="chatBadgeCount[item.id]">{{chatBadgeCount[item.id]}}</span></div>
+      
+  </ul>
+  <div class="sidebar-hover-elem" [ngStyle]="{top: hoverElemTop + 'px', height: hoverElemHeight + 'px'}"
+       [ngClass]="{'show-hover-elem': showHoverElem }"></div>
+</aside>

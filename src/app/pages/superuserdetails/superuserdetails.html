@@ -1,0 +1,24 @@
+<h1>{{superUserDetails.name}}</h1>
+<carousel>
+  <slide *ngFor="let sliderImage of sliderImages">
+    <img  src="{{sliderImage.url}}" alt="First slide">
+  </slide>
+  
+</carousel>
+<div class="fullDescription">
+  <div [innerHTML]='superUserDetails.fullDescription'></div>
+</div>
+<!--<h1>Partners</h1>-->
+<div class="partner-row">
+  <div class="partner-column" *ngFor="let partnerUser of partnerUsers;">
+    <a href="#/pages/partnerdetails/{{id}}/{{partnerUser.uid}}">
+    <h3>{{partnerUser.name}}</h3>
+       <img style="max-width:100%;max-heigth:100%;box-shadow: 1px 2px 13px 0px #111;" src="{{partnerUser.sliderImages_array[0]}}" alt="First slide">
+      <p>{{partnerUser.shortDescription}}</p>
+    </a>
+  </div>
+  
+</div>
+
+
+

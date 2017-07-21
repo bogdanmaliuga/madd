@@ -1,0 +1,145 @@
+@import '../../theme/sass/auth';
+
+.fullDescription
+{
+    width:100%;
+    text-align: center;
+    margin: 20px;
+}
+.fullDescription-div
+{
+   width:80%;
+   margin-left: 10%;
+   margin-bottom: 70px;
+   font-weight: bold;
+   word-spacing: 1px;
+   line-height: 25px;
+   color: rgb(136,139,140);
+   font-size: 18px;
+   font-family: 'Open Sans', sans-serif;
+}
+.partner-row
+{
+    width:100%;
+
+}
+.partner-column
+{
+    width: 30%;
+    margin: 30px 1.6%;
+    float: left;
+    min-height: 50px;
+    text-align: center;
+}
+.partner-column p
+{
+    width: 80%;
+    margin-left: 10%;
+    text-align: center;
+    margin-top: 20px;
+     color:#111;
+}
+.partner-column a
+{
+    color:#111;
+    text-decoration: none;
+}
+h1{
+  font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(82,82,82);
+}
+.carousel-inner
+{
+    text-align: center;
+}
+.carousel
+{
+    width: 80%;
+    margin-left: 10%;
+}
+.partner-contact-details
+{
+float: left;
+width: 40%;
+}
+.partner-contact-details-inner
+{
+float: left;
+width: 100%;
+    padding: 10px;
+background: #fff;
+box-shadow: 10px 2px 13px 0px #111;
+min-height: 100px;
+}
+.partner-contact-heading-outer
+{
+width:100%;
+float: left;
+}
+.partner-contact-heading
+{
+    width: 90%;
+    float: left;
+}
+.partner-contact-subheading
+{
+    float: left;
+    width: 100%;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+.partner-contact-info
+{
+    float: left;
+    width: 100%;
+    margin-top: 5px;
+    margin-left: 5px;
+
+}
+.partner-contact-row
+{
+float: left;
+width: 100%;
+margin-bottom: 10px;
+}
+.partner-contact-row i
+{
+    margin-right: 10px;
+    font-size: 20px;
+    width: 20px;
+    float: left;
+}
+.mad-coins-section
+{
+    float: right;
+
+    min-height: 20px;
+    width:40%;
+   
+}
+.mad-coins-section-row
+{
+    float: left;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.mad-coins-section-column
+{
+    float: left;
+    width: 50%;
+}
+.coins-box
+{
+    border: 2px solid #9f9f9f;
+    float: left;
+    min-width: 85px;
+    margin: 0% 10%;
+    height: 85px;
+    text-align: center;
+    line-height: 78px;
+    
+}

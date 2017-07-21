@@ -1,0 +1,104 @@
+<h1 *ngIf="!edit">
+  
+  {{partnerUser.name}} 
+  
+  
+  
+  
+</h1>
+<h1 *ngIf="edit">
+  <input name="partnername"  class="form-control" type="text" [(ngModel)] = "partnerUser.name" > 
+  <button type="button" class="btn btn-info" style="float:right;" (click)="save_fun()">Save</button>
+</h1>
+<carousel *ngIf="!edit">
+  <slide *ngFor="let sliderImage of partnerUser.sliderImages_array">
+    <img src="{{sliderImage}}" alt="First slide">
+  </slide>
+  
+</carousel>
+<div class="fullDescription">
+  <div *ngIf="!edit" class="fullDescription-div">{{partnerUser.fullDescription}}</div>
+  <div *ngIf="edit"><div style="float:left;">Full Description :</div><textarea name="fullDescription" class="form-control" [(ngModel)]="partnerUser.fullDescription"></textarea></div>
+  
+</div>
+<div class="fullDescription">
+
+  <div *ngIf="edit"><div style="float:left;">Short Description</div> <textarea name="shortDescription" class="form-control" [(ngModel)]="partnerUser.shortDescription"></textarea></div>
+  
+</div>
+<div style="width:80%;margin-left:10%; margin-right: 10%;margin-bottom: 100px;float:left;"  *ngIf="!edit">
+<div class="partner-contact-details">
+  <div class="partner-contact-details-inner">
+    <div class="partner-contact-heading-outer">
+        <div class="partner-contact-heading">Informações de Contato</div>
+        <div><i class="icon ion-edit" *ngIf="showEdit" (click)="edit_fun()"></i></div>
+    <!--<button type="button" class="btn btn-info" style="float:right;"  >Edit</button>-->
+    </div>
+    <div  class="partner-contact-subheading">Dados do Responsável pelo Projeto</div>
+    <div class="partner-contact-info">
+      <div class="partner-contact-row"><i class="icon ion-email"></i>{{partnerUser.email}}<div></div></div>
+       <div class="partner-contact-row"><i class="icon ion-location"></i>{{partnerUser.contactInformation}}<div></div></div>
+      <div class="partner-contact-row"><i class="icon ion-document-text"></i>{{partnerUser.CPF}}<div></div></div>
+    </div>
+  </div>
+</div>
+<div class="mad-coins-section">
+  <div class="mad-coins-section-row">
+    <div class="mad-coins-section-column">
+      <h4>MADCOINS PRETENDIDAS</h4>
+      <div  class="coins-box">
+      {{partnerUser.madCoinsTarget}}
+      </div>
+    </div>
+    <div class="mad-coins-section-column">
+      <h4>MADCOINS RECEBIDAS</h4>
+        <div class="coins-box" >
+          
+       {{partnerUser.coinsReceived}}
+        </div>
+    </div>
+  </div>
+
+  <div class="mad-coins-section-row" *ngIf="showDonateCoins">
+    <div class="mad-coins-section-column" style="text-transform:uppercase;color: gray; font-size: 10px;margin-top: 40px;">
+     Donate and make a difference
+    </div>
+    <div class="mad-coins-section-column">
+        <div class="coins-box" >
+         <input  style="float:right;width:83px;border:0px;text-align: center;"  [(ngModel)]="donationamount"  name="donationamount" type="text"   maxlength="{{availableCoins}}">
+        
+        </div>
+         <button type="button" class="btn btn-info"  *ngIf="donationamount>0" (click)="donate()" >Donate Coins</button>
+    </div>
+  </div>
+</div>
+</div>
+<div class="form-group row" *ngIf="edit">
+        <label for="inputEmail3" class="col-sm-2 control-label">Contact Information</label>
+
+        <div class="col-sm-10" >
+          <textarea name="ContactInformation" class="form-control" [(ngModel)] = "partnerUser.contactInformation"></textarea>
+        </div>
+        
+</div>
+ <div class="form-group row" *ngIf="edit">
+        <label for="inputEmail3" class="col-sm-2 control-label">Slider Image (Multiple)</label>
+        <div class="col-sm-10">
+           <input type="file" (change)="onSliderChange($event)" accept="image/*" />
+            <img style="width: 50px;border-radius: 100%;" *ngFor="let sliderImage of partnerUser.sliderImages_array;" src="{{sliderImage}}">
+            <div *ngFor="let sliderImage of sliderImages_temp;">{{sliderImage.name}}</div>
+          </div>
+      </div>
+<div class="form-group row" *ngIf="edit">
+   <div class="col-sm-6">
+        <label for="inputEmail3" class="col-sm-4 control-label">MADCOINS TARGET</label>
+        <div class="col-sm-8" >
+          <textarea name="fullDescription" class="form-control" [(ngModel)]="partnerUser.madCoinsTarget"></textarea>
+        </div>
+   </div>
+  
+
+</div>
+
+
+

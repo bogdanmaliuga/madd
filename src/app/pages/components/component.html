@@ -1,0 +1,8 @@
+
+<div *ngFor="let project of myprojects" (click)="pdetails(project)" style="margin-right: 20px;">
+    <ba-card class="pie-chart-item-container col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12">
+   				<p>Project Name : {{project.projectname}} </p>
+                <p *ngIf="project.type">Project Type : {{project.type}}</p>
+                <p *ngIf="project.projecttype">Project Type : {{project.projecttype}}</p>
+    </ba-card>
+ </div>

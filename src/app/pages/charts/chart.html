@@ -1,0 +1,157 @@
+
+<div >
+  <div aria-label="Basic example" class="btn-group" role="group">
+    <button class="btn {{type =='all'? 'btn-danger':'btn-light'}}" type="button" (click)="togglebtn('all')">All</button>
+    <button class="btn {{type =='pending'? 'btn-danger':'btn-light'}}" type="button" (click)="togglebtn('pending')">Pending</button>
+    <button class="btn {{type =='accepted'? 'btn-danger':'btn-light'}}" type="button" (click)="togglebtn('accepted')">Accepted</button>
+    <button class="btn {{type =='rejected'? 'btn-danger':'btn-light'}}" type="button" (click)="togglebtn('rejected')">Rejected</button>
+    <button class="btn {{type =='inprogress'? 'btn-danger':'btn-light'}}" type="button" (click)="togglebtn('inprogress')">Inprogress</button>
+    <button class="btn {{type =='completed'? 'btn-danger':'btn-light'}}" type="button" (click)="togglebtn('completed')">Completed</button>
+  </div>
+
+
+  <div *ngFor="let task of allmytask" style="margin-right: 20px;margin-top: 20px;">
+
+  <div *ngIf="type =='all'">
+      <div>
+     
+        <div> 
+            <ba-card class="pie-chart-item-container col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12">
+
+              <p>Project Name : {{task.projectname}} </p>
+              <div style="width:100%;float:left;" *ngIf="task.progress"> <p style="float: left;">Task Progress : </p>
+                <p style="float: left;" *ngIf="task.edit!=true">  {{task.progress}}% </p>
+                <select style="float: left;"  [(ngModel)]="task.progress" *ngIf="task.edit==true">
+                  <option value="0">0%</option>
+                  <option value="10">10%</option>
+                  <option value="20">20%</option>
+                  <option value="30">30%</option>
+                  <option value="40">40%</option>
+                  <option value="50">50%</option>
+                  <option value="60">60%</option>
+                  <option value="70">70%</option>
+                  <option value="80">80%</option>
+                  <option value="90">90%</option>
+                  
+                </select>
+              <button type="button" *ngIf="task.edit!=true && task.status!='completed'" class="btn btn-info btn-xs" (click)="task.edit=true">Edit</button>
+               <button type="button" *ngIf="task.edit==true" class="btn btn-success btn-xs" (click)="task.edit=false;saveTaskProgress(task);">Save</button>
+
+              </div>
+
+              <p>Project Type : {{task.projecttype}}</p>
+              <p>Task Name : {{task.taskName}}</p>
+              <p>Task Description : {{task.taskDesc}}</p>
+              <p>Task Reward : {{task.taskReward}}</p>
+              <p>Task Status : {{task.status}}</p>
+             <p style="width: 100%;font-size: smaller;"> {{task.timestamp | date:'medium'}} </p>
+
+               <button  *ngIf="task.status=='pending'" class="btn btn-success btn-auth" (click)="accept(task)">Accept</button>
+                <button  *ngIf="task.status=='pending'" class="btn btn-danger btn-auth" (click)="reject(task)">Reject</button>
+                <button  *ngIf="task.status=='accepted' && !task.NeedToApproved " class="btn btn-default btn-auth" (click)="movetoprogress(task)">Move in progress</button>
+                 <button  *ngIf="task.status=='inprogress'" class="btn btn-success btn-auth" (click)="taskcompleted(task)">Completed</button>
+            
+            </ba-card>
+        </div>
+        
+      </div>
+  </div>
+
+    <div *ngIf="type =='pending'">
+      <div  class="card-body"  *ngIf="task.status=='pending'">
+     
+        <div> 
+            <ba-card class="pie-chart-item-container col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12">
+             <p>Project Name : {{task.projectname}} </p>
+              <p>Project Type : {{task.projecttype}}</p>
+              <p>Task Name : {{task.taskName}}</p>
+              <p>Task Description : {{task.taskDesc}}</p>
+              <p>Task Reward : {{task.taskReward}}</p>
+              <p>Task Status : {{task.status}}</p>
+              <p style="width: 100%;font-size: smaller;"> {{task.timestamp | date:'medium'}} </p>
+
+              <button  class="btn btn-success btn-auth" (click)="accept(task)">
+              Accept</button>
+              <button  class="btn btn-danger btn-auth" (click)="reject(tasktask)">Reject</button>
+             
+            </ba-card>
+        </div>
+        
+      </div>
+  </div>
+
+
+    <div *ngIf="type =='accepted'">
+      <div  class="card-body"  *ngIf="task.status!='pending' && task.status!='rejected'">
+     
+        <div> 
+            <ba-card class="pie-chart-item-container col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12">
+              <p>Project Name : {{task.projectname}} </p>
+              <p>Project Type : {{task.projecttype}}</p>
+              <p>Task Name : {{task.taskName}}</p>
+              <p>Task Description : {{task.taskDesc}}</p>
+              <p>Task Reward : {{task.taskReward}}</p>
+              <p>Task Progress : {{task.progress}}%</p>
+              <p style="width: 100%;font-size: smaller;"> {{task.timestamp | date:'medium'}} </p>
+              <button  *ngIf="task.status=='accepted' && !task.NeedToApproved" class="btn btn-default btn-auth" (click)="movetoprogress(task)">Move in progress</button>
+              
+            </ba-card>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="type =='rejected'">
+      <div  class="card-body"  *ngIf="task.status=='rejected'">
+     
+        <div> 
+           <ba-card class="pie-chart-item-container col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12">
+              <p>Project Name : {{task.projectname}} </p>
+              <p>Project Type : {{task.projecttype}}</p>
+              <p>Task Name : {{task.taskName}}</p>
+              <p>Task Description : {{task.taskDesc}}</p>
+              <p>Task Reward : {{task.taskReward}}</p>
+              <p style="width: 100%;font-size: smaller;"> {{task.timestamp | date:'medium'}} </p>
+               
+            </ba-card>
+        </div>
+      </div>
+    </div>
+
+     <div *ngIf="type =='inprogress'">
+      <div  class="card-body"  *ngIf="task.status=='inprogress'">
+    
+        <div> 
+           <ba-card class="pie-chart-item-container col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12">
+              <p>Project Name : {{task.projectname}} </p>
+              <p>Project Type : {{task.projecttype}}</p>
+              <p>Task Name : {{task.taskName}}</p>
+              <p>Task Description : {{task.taskDesc}}</p>
+              <p>Task Reward : {{task.taskReward}}</p>
+              <p style="width: 100%;font-size: smaller;"> {{task.timestamp | date:'medium'}} </p>
+               <button  *ngIf="task.status=='inprogress'" class="btn btn-default btn-auth" (click)="taskcompleted(task)">Move to Compleated</button>
+               
+            </ba-card>
+        </div>
+      </div>
+    </div>
+
+     <div *ngIf="type =='completed'">
+      <div  class="card-body"  *ngIf="task.status=='completed'">
+     
+        <ba-card class="pie-chart-item-container col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12">
+              <p>Project Name : {{task.projectname}} </p>
+              <p>Project Type : {{task.projecttype}}</p>
+              <p>Task Name : {{task.taskName}}</p>
+              <p>Task Description : {{task.taskDesc}}</p>
+              <p>Task Reward : {{task.taskReward}}</p>
+              <p style="width: 100%;font-size: smaller;"> {{task.timestamp | date:'medium'}} </p>
+        </ba-card>
+      </div>
+    </div>
+
+</div>
+
+
+
+</div>
+  

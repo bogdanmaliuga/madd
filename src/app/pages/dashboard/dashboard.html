@@ -1,0 +1,122 @@
+<div class="col-md-12">
+  <div class="pie-chart-item-container col-xlg-6 col-lg-6 col-md-8 col-sm-12 col-xs-12">
+  <div *ngIf="CoinsPageLink" style="border: 2px solid #9f9f9f; border-radius: <10></10>px; padding: 30px; margin-bottom: 20px;">
+    <h4>Consulte aqui o seu saldo de MadCoins</h4>
+    <div *ngFor="let myMadCoin of myMadCoins">{{myMadCoin.companyName}} : {{myMadCoin.amount}}</div>
+  </div>
+  <h4>Busque os projetos de seu interesse</h4>
+  <input type="search" style=" margin-bottom: 20px;" placeholder="busca..." [(ngModel)]="userFilter.name" class="form-control">
+  </div>
+  <div class="col-xlg-6 col-lg-6 col-md-8 col-sm-12 col-xs-12">
+    <h4>Encontre amigos e amplie sua rede do bem</h4>
+  <div class="form-group col-sm-6">
+    <input type="email" class="form-control" [(ngModel)]="inviteEmail" placeholder="Digite o e-mail" name="inviteEmail">
+    <div style="font-size: 14px;background: #111;color: red;padding: 2px;text-align: center;" *ngIf="InviteSendError">{{InviteSendError}}</div>
+  </div>
+ 
+    <button class="btn btn-success" (click)="invite(inviteEmail)">Enviar Convite</button>
+   </div>
+   <div>
+  <div  style="margin-right: 20px;margin-top: 40px;" *ngFor="let invitation of invitaionRecv" >
+      <ba-card class="pie-chart-item-container col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12">
+                  <p>Invitation : {{invitation.username}} ({{invitation.inviteFrom}}) </p>
+           <div class="button-wrapper">
+                <button type="button" class="btn btn-danger btn-raised"  style="margin-right: 20px;" (click)="reject(invitation.id)">Recusar</button>
+                <button type="button" (click)="accept(invitation.id,invitation.inviteFrom)" class="btn btn-success btn-raised">Aceitar</button>
+            </div>
+           
+      </ba-card>
+  </div>
+</div>
+</div>
+<div class="col-md-12">
+  <div class="text-center" style="margin-bottom: 50px;">       
+      <!--<h3 class="ng-binding" *ngIf="!showInitialMessage">Bem Vindo, {{name}} !</h3>
+      <h3 class="ng-binding" *ngIf="showInitialMessage">Bem Vindo, {{name}} ! Você ainda não tem nenhum projeto. Vamos comerçar a fazer a diferença?</h3>-->
+      <h1>Olá, possui Madcoins? Encontre uma empresa MAD e faça a diferença. Ou crie seus projetos e compartilhe com seus amigos!</h1>
+</div>
+</div> 
+
+<div class="container" >
+    <div class="text-center" style="margin-top: 70px;">       
+      <!--<h1>Mensagens Enviadas</h1>        -->
+    </div>
+ </div> 
+
+<div class="pie-chart-item-container col-xlg-6 col-lg-6 col-md-8 col-sm-12 col-xs-12">
+   <div class="text-center" style="margin-bottom: 30px;">
+ <h2>Projetos Empresas MAD</h2>   
+ </div> 
+<div class="partner-row">
+  <div class="partner-column" *ngFor="let superUser of superUsers | filterBy: userFilter">
+    <a href="#/pages/superuserdetails/{{superUser.uid}}">
+    <h3>{{superUser.name}}</h3>
+      <img style="width: 75%;margin-left: 10%;box-shadow: 1px 2px 13px 0px #111;" src="{{superUser.sliderImages_array[0]}}" alt="First slide">
+      <p>{{superUser.shortDescription}}</p>
+    </a>
+  </div>
+</div>
+</div>
+
+<form class="pie-chart-item-container col-xlg-6 col-lg-6 col-md-8 col-sm-12 col-xs-12">
+ <div class="text-center" style="margin-bottom: 30px;"> 
+  <h2>Projetos da Minha Rede MAD</h2>
+  </div>
+
+   <div class="form-group col-sm-6 timeline" *ngFor="let myTimeline of myTimelines" (click)="pdetails(myTimeline)">
+     <p><b>{{myTimeline.userName}} criou um novo projeto</b></p>
+     <img [src]="myTimeline.projectPic" *ngIf="myTimeline.projectPic" width="80%">
+     <p>{{myTimeline.projectName}}</p>
+  </div>
+</form>
+
+
+
+
+<!-- <div class="row">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <pie-chart></pie-chart>
+  </div>
+</div>
+<div class="row">
+  <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
+                     title="Acquisition Channels" baCardClass="traffic-panel medium-card">
+    <traffic-chart></traffic-chart>
+  </ba-card>
+  <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
+           title="Users by Country" baCardClass="medium-card">
+    <users-map></users-map>
+  </ba-card>
+</div>
+<div class="row">
+  <div class="col-xlg-9 col-xl-6 col-lg-6  col-md-12 col-sm-12 col-xs-12">
+    <div class="row">
+      <ba-card class="col-xlg-8 col-xl-12 col-lg-12 col-md-7 col-sm-12 col-xs-12"
+               title="Revenue" baCardClass="medium-card">
+        <line-chart></line-chart>
+      </ba-card>
+      <ba-card class="col-xlg-4 col-xl-12 col-lg-12 col-md-5 col-sm-12 col-xs-12"
+               baCardClass="popular-app medium-card">
+        <popular-app></popular-app>
+      </ba-card>
+    </div>
+  </div>
+  <div class="col-xlg-3 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+    <ba-card title="Feed"
+             baCardClass="large-card with-scroll feed-panel">
+      <feed></feed>
+    </ba-card>
+  </div>
+</div>
+<div class="row shift-up">
+  <ba-card class="col-xlg-3 col-lg-6 col-md-12 col-sm-12 col-xs-12" title="To Do List"
+           baCardClass="xmedium-card feed-comply-panel with-scroll todo-panel">
+    <todo></todo>
+  </ba-card>
+  <ba-card class="col-xlg-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" title="Calendar"
+           baCardClass="xmedium-card feed-comply-panel with-scroll calendar-panel">
+    <calendar></calendar>
+  </ba-card>
+</div>
+ -->
+

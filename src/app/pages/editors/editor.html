@@ -1,0 +1,110 @@
+<style type="text/css">
+  .tasks-heading
+{
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 0.1);
+    height:40px;
+    line-height:40px;
+    padding-left:10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.table-heading
+{
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+</style>
+    <form  class="form-horizontal">
+      
+      <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 control-label">Project Name</label>
+        <div class="col-sm-10">
+          <input  [(ngModel)]="data.projectname" name="projectname" type="text" class="form-control" id="inputEmail3" placeholder="Project name">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="inputPassword3" class="col-sm-2 control-label">Project Objective</label>
+        <div class="col-sm-10">
+          <textarea  [(ngModel)]="data.projectobjective" name="projectobjective" class="form-control" id="textarea01" placeholder="Project Objective"></textarea>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputPassword3" class="col-sm-2 control-label">Project Location</label>
+        <div class="col-sm-10">
+         <input name="projectlocation" id="googleplace_auto" class="form-control" type="text" [(ngModel)] = "address" >
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputPassword3" class="col-sm-2 control-label">Project Banner Image</label>
+        <div class="col-sm-10">
+        <button class="btn btn-info" style="margin-bottom: 10px;float: left; position: relative;margin-right:10px;" (click)=setBackground()><input (change)="setBackground($event)" type="file" accept="image/*" style="position:absolute;opacity: 0;left:0;width:130px;">Choose</button>
+       
+        <img [src]="backgroundImagePreview.result" *ngIf="backgroundImagePreview" style="max-height:50px"/>
+        </div>
+      </div>
+           
+
+      <div class="widgets" *ngIf="showSmartTable">
+
+        <div class="row">
+          <ba-card title="Project Resources" baCardClass="with-scroll">
+            <ng2-smart-table [settings]="resource_settings" [source]="resources_temp" (editConfirm)="saveResource($event,'edit')" (createConfirm)="saveResource($event,'save')" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+          </ba-card>
+        </div>
+
+      </div>    
+     <div class="widgets" *ngIf="showSmartTable">
+
+        <div class="row">
+          <ba-card title="Project Tasks" baCardClass="with-scroll">
+            <ng2-smart-table [settings]="tasks_settings" [source]="tasks_temp" (editConfirm)="saveTask($event,'edit')" (createConfirm)="saveTask($event,'save')" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+          </ba-card>
+        </div>
+
+      </div>
+
+
+  
+  <div class="form-group row">
+    <label class="col-sm-2 control-label">Project type</label>
+      <div class="col-sm-10">
+        <div class="input-demo radio-demo row">
+            <div class="col-md-4">
+              <label class="radio-inline custom-radio nowrap">
+                <input type="radio" name="type" id="inlineRadio1" value="public"  [(ngModel)]="data.type">
+                <span>Public</span>
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label class="radio-inline custom-radio nowrap" >
+                <input type="radio" name="type1" id="inlineRadio2" value="private"  [(ngModel)]="data.type" >
+                <span>Private</span>
+              </label>
+            </div>
+        </div>
+    </div>
+</div>
+  <div class="form-group row" *ngIf="data.type=='private'">
+    <label class="col-sm-2 control-label"> </label>
+      <div class="col-sm-10">
+        <div class="input-demo checkbox-demo row">
+            <div class="col-md-12">
+              <label class="checkbox-inline custom-checkbox nowrap">
+                <input type="checkbox" name="type" id="inlinecheckbox1"   [(ngModel)]="data.showOnDashbpard">
+                  <span>Show this project in my connections dashboard</span>
+              </label>
+            </div>
+           
+        </div>
+    </div>
+</div>
+      <div class="form-group row">
+        <div class="offset-sm-2 col-sm-10">
+          <button  (click)="onSubmit(data);" class="btn btn-primary btn-auth" *ngIf="showSubmit">Submit</button>
+          <button   class="btn btn-primary btn-auth" *ngIf="!showSubmit">Uploading...</button>
+        </div>
+      </div>
+    </form>
+    <div id="clickoutside"></div>

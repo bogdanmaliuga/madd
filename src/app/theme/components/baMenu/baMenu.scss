@@ -1,0 +1,21 @@
+@import '../../sass/conf/conf';
+.green-online
+{
+     height: 12px;
+    width: 12px;
+    float: left;
+    background: #00abff;
+    border-radius: 100%;
+    margin-right: 10px;
+    position: absolute;
+    margin-left: -14px;
+}
+
+.connection-image
+{
+	height: 30px;
+	float:left;
+    width: 30px;
+  border-radius:100%;
+      margin-right: 5px;
+}
