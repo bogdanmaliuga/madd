@@ -36,7 +36,7 @@ export class BaMenu {
   public connectionsOnline:any;
   public connectionsImage:any;
   public chatBadgeCount:any;
- 
+
   constructor(private _router: Router, private _service: BaMenuService, private _state: GlobalState,private af: AngularFire,private changeDetectorRef: ChangeDetectorRef,private broadcaster: Broadcaster) {
    this.uid=localStorage.getItem('uid');
     this.email= localStorage.getItem('email');
@@ -59,15 +59,15 @@ export class BaMenu {
        this.sUserDash=false;
     });
 
-   let connections_ref = firebase.database().ref().child('/userData/'+this.uid+'/connections');    
+   let connections_ref = firebase.database().ref().child('/userData/'+this.uid+'/connections');
     connections_ref.on('value', (connections_snapshot)=> {
         this.connections=[];
         this.connectionsOnline=[];
         this.connectionsImage=[];
         if(connections_snapshot)
         {
-           console.log("connections_snapshot");
-           console.log(connections_snapshot.val());
+          //  console.log("connections_snapshot");
+          //  console.log(connections_snapshot.val());
            this.chatBadgeCount=[];
            for(let k in connections_snapshot.val())
            {
@@ -77,24 +77,24 @@ export class BaMenu {
               this.connectionsOnline[k]=false;
               this.af.database.object('/userData/'+k+'/online',{ preserveSnapshot: true }).subscribe(snapshot => {
                 this.connectionsOnline[k]=snapshot.val();
-                console.log(snapshot.val())
+                // console.log(snapshot.val())
               });
               this.af.database.object('/userData/'+k+'/picture',{ preserveSnapshot: true }).subscribe(snapshot => {
                 this.connectionsImage[k]=snapshot.val();
-                console.log(snapshot.val())
+                // console.log(snapshot.val())
               });
 
-             
+
               this.connections.push(d);
-              
-              console.log(this.connections);
+
+              // console.log(this.connections);
               var f_ref=firebase.database().ref().child('/userChatNotificationCounter/'+this.uid+'/'+k);
               f_ref.on('value', (counter)=> {
                 this.chatBadgeCount[counter.key]=counter.val();
-                console.log(counter.val());
-                console.log(counter.key);
-                console.log(this.chatBadgeCount[counter.key]);
-                console.log("============");
+                // console.log(counter.val());
+                // console.log(counter.key);
+                // console.log(this.chatBadgeCount[counter.key]);
+                // console.log("============");
               });
 
               this.changeDetectorRef.detectChanges();
@@ -102,12 +102,12 @@ export class BaMenu {
         }
         });
 
-              
-              
+
+
 
 
   }
-  
+
   public updateMenu(newMenuItems) {
     this.menuItems = newMenuItems;
     this.selectMenuAndNotify();
@@ -150,7 +150,7 @@ export class BaMenu {
 
   openChat(item)
   {
-    console.log(item);
+    // console.log(item);
     if(item.status=='accepted')
    this.broadcaster.broadcast('openchat', item.id);
   }

@@ -24,18 +24,18 @@ public ngOnInit(): void {
   var projectAssigned_ref2 = firebase.database().ref('/projectAssigned/').orderByChild('email').equalTo(localStorage.getItem('email'));
                   projectAssigned_ref2.on('value', (snapshot1)=> {
                   this.pendingTasksCount=0;
-                  
+
                          for(var k in snapshot1.val())
                             {
-                            console.log(snapshot1.val()[k].status);
+                            // console.log(snapshot1.val()[k].status);
                             if(snapshot1.val()[k].status=='pending' && snapshot1.val()[k].type=='task')
                               this.pendingTasksCount=this.pendingTasksCount+1;
-                              console.log(this.pendingTasksCount);
-        
+                              // console.log(this.pendingTasksCount);
+
                             }
-                            
-                                             
-                         
+
+
+
         });
 
 }
@@ -44,5 +44,5 @@ public ngOnInit(): void {
     this.toggleSubMenu.emit($event);
     return false;
   }
- 
+
 }

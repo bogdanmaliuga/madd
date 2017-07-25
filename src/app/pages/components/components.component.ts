@@ -23,48 +23,48 @@ export class Components {
    constructor(fb:FormBuilder, private router: Router,  af: AngularFire)
    {
   if(!window.localStorage.getItem('loggedin'))
-        { 
-        
+        {
+
           this.router.navigate(['login']);
         }
                 this.email= localStorage.getItem('email');
                 this.uid= localStorage.getItem('uid');
-                console.log(this.email);
-                var ref2 = firebase.database().ref().child('/projectData/');    
+                // console.log(this.email);
+                var ref2 = firebase.database().ref().child('/projectData/');
                       var query = ref2.orderByChild('createdBy').equalTo(this.email);
 
                         query.once('value', (snapshot1)=> {
-                            console.log(snapshot1.val());
+                            // console.log(snapshot1.val());
                           for(var k in snapshot1.val())
                             {
                               var d=snapshot1.val()[k];
                               d.id=k;
-                              console.log(this.myprojects);
+                              // console.log(this.myprojects);
                               this.myprojects.push(d);
-                              console.log(d);
+                              // console.log(d);
                             }
-                            
-                         
+
+
                         });
 
                       var ref3 = firebase.database().ref().child('/userData/'+this.uid+'/acceptedTasks');
 
                         ref3.once('value', (snapshot1)=> {
-                         
+
                           for(var k in snapshot1.val())
                             {
                               var d=snapshot1.val()[k];
                               this.myprojects.push(d);
-                             
+
                             }
-                            
-                         
-                        });  
+
+
+                        });
 
  	}
 
 
-    
+
       pdetails(data)
       {
        console.log("data====",data);
@@ -75,7 +75,7 @@ export class Components {
        id=data.projectId;
        this.router.navigate(['pages/projectdetails/',id]);
       }
-      
+
   public onSubmit(values:Object):void {
     this.submitted = true;
     if (this.form.valid) {

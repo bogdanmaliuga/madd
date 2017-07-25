@@ -39,8 +39,8 @@ export class App {
       this.isMenuCollapsed = isCollapsed;
     });
     if(!window.localStorage.getItem('loggedin'))
-    { 
-    console.log("here");
+    {
+    
       this.router.navigate(['login']);
     }
   }

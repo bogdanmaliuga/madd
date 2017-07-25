@@ -19,8 +19,8 @@ export class Admin {
   public showSubmit1:boolean=true;
   constructor(fb:FormBuilder,private af: AngularFire,private router: Router,private route: ActivatedRoute, public changeDetectorRef: ChangeDetectorRef) {
   if(!window.localStorage.getItem('loggedin'))
-        { 
-        
+        {
+
           this.router.navigate(['login']);
         }
     this.email= localStorage.getItem('email');
@@ -29,8 +29,8 @@ export class Admin {
     this.prifleImage=localStorage.getItem('picture');
 
       firebase.database().ref('/userData/').orderByChild('superuser').equalTo(true).once('value', (snapshot1)=> {
-        console.log("Superuser");
-        console.log(snapshot1.val());
+        // console.log("Superuser");
+        // console.log(snapshot1.val());
         if(snapshot1.val())
         {
           for(let key in snapshot1.val())
@@ -68,9 +68,9 @@ export class Admin {
         {
            if(this.sUserForm.company)
          {
-          
+
           this.showSubmit1=false;
-          var ref2 = firebase.database().ref('/userData/');    
+          var ref2 = firebase.database().ref('/userData/');
             var query = ref2.orderByChild('email').equalTo(this.sUserForm.email);
             query.once('value', (snapshot1)=> {
             if(snapshot1.val())
@@ -88,7 +88,7 @@ export class Admin {
                       alert("Success: Superuser added successfully.");
                       this.sUserForm=[];
                   }
-                  
+
               }
             }
             else
@@ -98,12 +98,12 @@ export class Admin {
                       this.sUserForm=[];
             }
             });
-          } 
+          }
         else
         {
           alert("Please fill Company");
         }
-        } 
+        }
         else
         {
           alert("Please fill  Email");
@@ -111,11 +111,11 @@ export class Admin {
       }else
         {
           alert("Please fill CNPJ");
-        } 
+        }
     }else
         {
           alert("Please fill Name");
         }
   }
- 
+
 }

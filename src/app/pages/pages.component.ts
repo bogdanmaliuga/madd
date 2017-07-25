@@ -23,13 +23,13 @@ export class Pages {
 
   constructor(private _menuService: BaMenuService,private router: Router) {
   if(!window.localStorage.getItem('loggedin'))
-    { 
-    console.log("here");
+    {
+       
       this.router.navigate(['login']);
     }
     else
     {
-    
+
       var presenceRef = firebase.database().ref("userData/"+localStorage.getItem('uid'));
       // Write a string when this client loses connection
       presenceRef.onDisconnect().update({online:false});
