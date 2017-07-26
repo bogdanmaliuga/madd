@@ -1,121 +1,163 @@
-    <h1>Add Partner User</h1>
-     <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
-        <div class="col-sm-10">
-          <input name="partnername"  class="form-control" type="text" [(ngModel)] = "partner.name" >
+<div class="superuser-form-block">
+  <h1>Add Partner User</h1>
+  <form #parnterForm="ngForm" class="form-horizontal">
+    <div class="form-group">
+      <label for="partnername" class="col-sm-2 control-label">Name</label>
+      <div class="col-sm-10">
+        <input name="partnername" id="partnername" #partnername="ngModel" class="form-control" type="text" required [(ngModel)]="partner.name">
+      </div>
+      <div *ngIf="partnername.errors &&(partnername.dirty || partnername.touched)" class="col-sm-offset-2 col-sm-10 alert-block">
+        <div class="col-xs-12" [hidden]="!partnername.errors.required">
+          Partner name is required
         </div>
       </div>
-      <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 control-label">CPF</label>
-        <div class="col-sm-10">
-          <input name="partnercpf"  class="form-control" type="text" [(ngModel)]="partner.CPF" >
+    </div>
+    <div class="form-group ">
+      <label for="partnercpf" class="col-sm-2 control-label">CPF</label>
+      <div class="col-sm-10">
+        <input name="partnercpf" pattern="^(0|[1-9][0-9]*)$" id="partnercpf" required #partnercpf="ngModel" class="form-control" type="text" [(ngModel)]="partner.CPF">
+      </div>
+      <div *ngIf="partnercpf.errors && (partnercpf.dirty || partnercpf.touched)" class="col-sm-offset-2 col-sm-10 alert-block">
+        <div class="col-xs-12" [hidden]="!partnercpf.errors.required">
+          CPF is required
         </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 control-label">email</label>
-        <div class="col-sm-10">
-          <input name="partneremail"  class="form-control" type="email" [(ngModel)]="partner.email" >
+        <div class="col-xs-12" [hidden]="!partnercpf.errors.pattern">
+          CPF contains only numbers
         </div>
+
       </div>
-     <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 control-label">Contact Information</label>
-        <div class="col-sm-10">
-          <textarea name="ContactInformation" class="form-control" [(ngModel)] = "partner.contactInformation"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="partneremail" class="col-sm-2 control-label">Email</label>
+      <div class="col-sm-10">
+        <input name="partneremail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required id="partneremail" #partneremail="ngModel" class="form-control" type="email" [(ngModel)]="partner.email">
+      </div>
+      <div *ngIf="partneremail.errors && (partneremail.dirty || partneremail.touched)" class="col-sm-offset-2 col-sm-10 alert-block">
+        <div class="col-xs-12" [hidden]="!partneremail.errors.required">
+          Email is required
         </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 control-label">Short Description</label>
-        <div class="col-sm-10">
-          <textarea name="shortDescription" class="form-control" [(ngModel)]="partner.shortDescription"></textarea>
+        <div class="col-xs-12" [hidden]="!partneremail.errors.pattern">
+          Email is invalid
         </div>
+
       </div>
-      <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 control-label">Full Description</label>
-        <div class="col-sm-10">
-         <textarea name="fullDescription" class="form-control" [(ngModel)]="partner.fullDescription"></textarea>
-        </div>
+    </div>
+    <div class="form-group ">
+      <label for="contactInformation" class="col-sm-2 control-label">Contact Information</label>
+      <div class="col-sm-10">
+        <textarea name="contactInformation" class="form-control" [(ngModel)]="partner.contactInformation"></textarea>
       </div>
-      <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 control-label">MADCOINS Target</label>
-        <div class="col-sm-10">
-         <textarea name="fullDescription" class="form-control" [(ngModel)]="partner.madCoinsTarget"></textarea>
-        </div>
+    </div>
+    <div class="form-group ">
+      <label for="shortDescription" class="col-sm-2 control-label">Short Description</label>
+      <div class="col-sm-10">
+        <textarea name="shortDescription" class="form-control" [(ngModel)]="partner.shortDescription"></textarea>
       </div>
-      <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 control-label">Slider Image (Multiple)</label>
-        <div class="col-sm-10">
-           <input type="file" (change)="onSliderChange($event)" accept="image/*" />
-            <img style="width: 50px;border-radius: 100%;" *ngFor="let sliderImage of sliderImages;" src="{{sliderImage.url}}">
-            <div *ngFor="let sliderImage of sliderImages_temp;">{{sliderImage.name}}</div>
-          </div>
+    </div>
+    <div class="form-group">
+      <label for="fullDescription" class="col-sm-2 control-label">Full Description</label>
+      <div class="col-sm-10">
+        <textarea name="fullDescription" class="form-control" [(ngModel)]="partner.fullDescription"></textarea>
       </div>
-      <div class="form-group row">
-        <div class="offset-sm-2 col-sm-10">
-          <button  (click)="onPartnerSubmit();" class="btn btn-primary btn-auth" *ngIf="showSubmit1">Add</button>
-          <button   class="btn btn-primary btn-auth" *ngIf="!showSubmit1">Adding...</button>
-        </div>
+    </div>
+    <div class="form-group">
+      <label for="madCoinsTarget" class="col-sm-2 control-label">MADCOINS Target</label>
+      <div class="col-sm-10">
+        <textarea name="madCoinsTarget" class="form-control" [(ngModel)]="partner.madCoinsTarget"></textarea>
       </div>
-      <br/>
-      <br/>
-<br/>
-<hr/>
-<h1>My Partners</h1>
-<div class="partner-row">
-  
-  <div class="partner-column" *ngFor="let partnerUser of partnerUsers;" >
-    <a href="#/pages/partnerdetails/{{uid}}/{{partnerUser.uid}}">
-    <h3>{{partnerUser.name}}</h3>
-      <img style="width: 80%;height: 200px;margin-left: 10%;" src="{{partnerUser.sliderImages_array[0]}}" alt="First slide">
-      <p>{{partnerUser.shortDescription}}</p>
-    </a>
-  </div>
-  
+    </div>
+    <div class="form-group">
+      <label for="url" class="col-sm-2 control-label">Slider Image (Multiple)</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="file" (change)="onSliderChange($event)" accept="image/*" />
+        <img style="width: 50px;border-radius: 100%;" *ngFor="let sliderImage of sliderImages;" src="{{sliderImage.url}}">
+        <div *ngFor="let sliderImage of sliderImages_temp;">{{sliderImage.name}}</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="offset-sm-2 col-sm-10">
+        <button [disabled]="!parnterForm.form.valid" (click)="onPartnerSubmit();" class="btn btn-primary btn-auth" *ngIf="showSubmit1">Add</button>
+        <button class="btn btn-primary btn-auth" *ngIf="!showSubmit1">Adding...</button>
+      </div>
+    </div>
+  </form>
 </div>
-<hr/>
- <br/>
-  <br/>
-   <br/>
+<div class="superuser-form-block" *ngIf="partnerUsers.length>0">
+  <h1>My Partners</h1>
+  <div class="partner-row">
+    <div class="partner-column" *ngFor="let partnerUser of partnerUsers;">
+      <a href="#/pages/partnerdetails/{{uid}}/{{partnerUser.uid}}">
+        <h3>{{partnerUser.name}}</h3>
+        <img style="width: 80%;height: 200px;margin-left: 10%;" src="{{partnerUser.sliderImages_array[0]}}" alt="First slide">
+        <p>{{partnerUser.shortDescription}}</p>
+      </a>
+    </div>
 
- <h1>Send Coins</h1>
-    <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 control-label">Client Email</label>
-        <div class="col-sm-10">
-          <input name="clientEmail"  class="form-control" type="email" [(ngModel)] = "formdata.clientEmail" >
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 control-label">Amount</label>
-        <div class="col-sm-10">
-          <input name="amount"  class="form-control" type="text" [(ngModel)]="formdata.amount" >
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 control-label">Invoice Number</label>
-        <div class="col-sm-10">
-          <input name="invoiceNumber"  class="form-control" type="text" [(ngModel)]="formdata.invoiceNumber" >
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="offset-sm-2 col-sm-10">
-          <button  (click)="onSubmit();" class="btn btn-primary btn-auth" *ngIf="showSubmit">Send</button>
-          <button   class="btn btn-primary btn-auth" *ngIf="!showSubmit">Sending...</button>
-        </div>
-      </div>
-      <br/>
-<h1>Coins Sent </h1>
-<div class="table-responsive">
-  <table class="table">
-    <tr>
-      
-      <td>Email</td>
-      <td>Amount</td>
-     
-    </tr>
-    <tr *ngFor="let coinsUser of coinsUsers;">
-      
-      <td *ngIf="coinsUser.clientEmail">{{coinsUser.clientEmail}}</td>
-      <td *ngIf="coinsUser.amount">{{coinsUser.amount}}</td>
+  </div>
+</div>
 
-    </tr>
-  </table>
+<div class="superuser-form-block">
+  <h1>Send Coins</h1>
+  <div class="form-group">
+    <label for="clientEmail" class="col-sm-2 control-label">Client Email</label>
+    <div class="col-sm-10">
+      <input name="clientEmail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required id="clientEmail" #clientEmail="ngModel" class="form-control" type="email" [(ngModel)]="formdata.clientEmail">
+    </div>
+    <div *ngIf="clientEmail.errors && (clientEmail.dirty || clientEmail.touched)" class="col-sm-offset-2 col-sm-10 alert-block">
+      <div class="col-xs-12" [hidden]="!clientEmail.errors.required">
+        Email is required
+      </div>
+      <div class="col-xs-12" [hidden]="!clientEmail.errors.pattern">
+        Email is invalid
+      </div>
+
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="amount" class="col-sm-2 control-label">Amount</label>
+    <div class="col-sm-10">
+      <input name="amount" pattern="^(0|[1-9][0-9]*)$" id="amount" required #amount="ngModel" class="form-control" type="text" [(ngModel)]="formdata.amount">
+    </div>
+    <div *ngIf="amount.errors && (amount.dirty || amount.touched)" class="col-sm-offset-2 col-sm-10 alert-block">
+      <div class="col-xs-12" [hidden]="!amount.errors.required">
+        Amount is required
+      </div>
+      <div class="col-xs-12" [hidden]="!amount.errors.pattern">
+        Amount contains only numbers
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="invoiceNumber" class="col-sm-2 control-label">Invoice Number</label>
+    <div class="col-sm-10">
+      <input name="invoiceNumber" required id="amount" #amount="ngModel" class="form-control" type="text" [(ngModel)]="formdata.invoiceNumber">
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="offset-sm-2 col-sm-10">
+      <button (click)="onSubmit();" class="btn btn-primary btn-auth" *ngIf="showSubmit">Send</button>
+      <button class="btn btn-primary btn-auth" *ngIf="!showSubmit">Sending...</button>
+    </div>
+  </div>
+</div>
+
+<div class="superuser-form-block">
+  <h1>Coins Sent </h1>
+  <div class="table-responsive">
+    <table class="table">
+      <tr>
+
+        <td>Email</td>
+        <td>Amount</td>
+
+      </tr>
+      <tr *ngFor="let coinsUser of coinsUsers;">
+
+        <td *ngIf="coinsUser.clientEmail">{{coinsUser.clientEmail}}</td>
+        <td *ngIf="coinsUser.amount">{{coinsUser.amount}}</td>
+
+      </tr>
+    </table>
+  </div>
+
 </div>

@@ -24,10 +24,7 @@ export class Superuser {
   public sliderImages: any = [];
   public sliderImages_temp: any = [];
   constructor(fb: FormBuilder, private af: AngularFire, private router: Router, private route: ActivatedRoute, public changeDetectorRef: ChangeDetectorRef) {
-    // if (!window.localStorage.getItem('loggedin')) {
-    //
-    //   this.router.navigate(['login']);
-    // }
+
     this.email = localStorage.getItem('email');
     this.uid = localStorage.getItem('uid');
     this.name = localStorage.getItem('name');
@@ -92,77 +89,64 @@ export class Superuser {
     });
   }
   onPartnerSubmit() {
-    if (this.partner.name) {
-      if (this.partner.CPF) {
-        if (this.partner.email) {
+    this.showSubmit1 = false;
+    var ref2 = firebase.database().ref('/userData/');
+    var query = ref2.orderByChild('email').equalTo(this.partner.email);
+    query.once('value', (snapshot1) => {
+      if (snapshot1.val()) {
+        for (var k in snapshot1.val()) {
+          let data = { email: this.partner.email, uid: k, name: this.partner.name, timestamp: firebase.database.ServerValue.TIMESTAMP, fullDescription: '', shortDescription: '', contactInformation: '', madCoinsTarget: 'Unlimited' };
+          if (this.partner.fullDescription)
+            data.fullDescription = this.partner.fullDescription;
+          if (this.partner.shortDescription)
+            data.shortDescription = this.partner.shortDescription;
+          if (this.partner.contactInformation)
+            data.contactInformation = this.partner.contactInformation;
+          if (this.partner.madCoinsTarget)
+            data.madCoinsTarget = this.partner.madCoinsTarget;
 
 
-          this.showSubmit1 = false;
-          var ref2 = firebase.database().ref('/userData/');
-          var query = ref2.orderByChild('email').equalTo(this.partner.email);
-          query.once('value', (snapshot1) => {
-            if (snapshot1.val()) {
-              for (var k in snapshot1.val()) {
-                let data = { email: this.partner.email, uid: k, name: this.partner.name, timestamp: firebase.database.ServerValue.TIMESTAMP, fullDescription: '', shortDescription: '', contactInformation: '', madCoinsTarget: 'Unlimited' };
-                if (this.partner.fullDescription)
-                  data.fullDescription = this.partner.fullDescription;
-                if (this.partner.shortDescription)
-                  data.shortDescription = this.partner.shortDescription;
-                if (this.partner.contactInformation)
-                  data.contactInformation = this.partner.contactInformation;
-                if (this.partner.madCoinsTarget)
-                  data.madCoinsTarget = this.partner.madCoinsTarget;
-
-
-                if (snapshot1.val()[k].superuser == true) {
-                  alert("Failed : " + this.partner.email + "is already superuser.");
-                }
-                else {
-                  firebase.database().ref('/userData/' + k).update({ cpf: this.partner.CPF });
-                  firebase.database().ref('/userData/' + k + '/partnerWith/' + this.uid).update({ email: this.email, uid: this.uid, name: this.name, timestamp: firebase.database.ServerValue.TIMESTAMP });
-                  firebase.database().ref('/userData/' + this.uid + '/myPartners/' + k).update(data);
-                  if (this.sliderImages_temp.length == 0) {
-                    this.showSubmit1 = true;
-                    this.partner = [];
-                    this.sliderImages_temp = [];
-                    alert("Success: Partner added successfully.");
-                  }
-                  else {
-                    this.uploadSliderImages(k);
-                  }
-
-
-                }
-
-              }
-            }
-            else {
-
-              let data = { cpf: this.partner.CPF, email: this.partner.email, addedBy: this.email, addById: this.uid, addByName: this.name, timestamp: firebase.database.ServerValue.TIMESTAMP, name: this.partner.name, fullDescription: '', shortDescription: '', contactInformation: '' };
-              if (this.partner.fullDescription)
-                data.fullDescription = this.partner.fullDescription;
-              if (this.partner.shortDescription)
-                data.shortDescription = this.partner.shortDescription;
-              if (this.partner.contactInformation)
-                data.contactInformation = this.partner.contactInformation;
-              firebase.database().ref('/unregisteredUser/partnerUsers').push(data);
-              alert("Success: Partner added successfully.");
+          if (snapshot1.val()[k].superuser == true) {
+            alert("Failed : " + this.partner.email + "is already superuser.");
+          }
+          else {
+            firebase.database().ref('/userData/' + k).update({ cpf: this.partner.CPF });
+            firebase.database().ref('/userData/' + k + '/partnerWith/' + this.uid).update({ email: this.email, uid: this.uid, name: this.name, timestamp: firebase.database.ServerValue.TIMESTAMP });
+            firebase.database().ref('/userData/' + this.uid + '/myPartners/' + k).update(data);
+            if (this.sliderImages_temp.length == 0) {
+              this.showSubmit1 = true;
               this.partner = [];
               this.sliderImages_temp = [];
-              this.showSubmit1 = true;
+              alert("Success: Partner added successfully.");
             }
-          });
+            else {
+              this.uploadSliderImages(k);
+            }
+
+
+          }
 
         }
-        else {
-          alert("Please fill  Email");
-        }
-      } else {
-        alert("Please fill CPF");
       }
-    } else {
-      alert("Please fill Name");
-    }
+      else {
+
+        let data = { cpf: this.partner.CPF, email: this.partner.email, addedBy: this.email, addById: this.uid, addByName: this.name, timestamp: firebase.database.ServerValue.TIMESTAMP, name: this.partner.name, fullDescription: '', shortDescription: '', contactInformation: '' };
+        if (this.partner.fullDescription)
+          data.fullDescription = this.partner.fullDescription;
+        if (this.partner.shortDescription)
+          data.shortDescription = this.partner.shortDescription;
+        if (this.partner.contactInformation)
+          data.contactInformation = this.partner.contactInformation;
+        firebase.database().ref('/unregisteredUser/partnerUsers').push(data);
+        alert("Success: Partner added successfully.");
+        this.partner = [];
+        this.sliderImages_temp = [];
+        this.showSubmit1 = true;
+      }
+    });
+
+
+
   }
   onSubmit() {
     if (this.formdata.clientEmail) {
@@ -250,7 +234,7 @@ export class Superuser {
 
         this.changeDetectorRef.detectChanges();
         if (this.sliderImages_temp.length == index + 1) {
-        this.showSubmit1 = true;
+          this.showSubmit1 = true;
           this.sliderImages_temp = [];
         }
       });

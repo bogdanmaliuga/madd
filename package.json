@@ -41,6 +41,7 @@
     "leaflet": "0.7.7",
     "leaflet-map": "0.2.1",
     "lodash": "4.17.4",
+    "ng-cpf-cnpj": "^1.0.0",
     "ng2-bootstrap": "1.3.3",
     "ng2-bootstrap-modal": "^1.0.1",
     "ng2-ckeditor": "1.1.5",

@@ -17,7 +17,7 @@ import { routing }       from './superuser.routing';
     Superuser
   ],
    entryComponents: [
-        
+
       ],
 })
 export class SuperuserModule {}
